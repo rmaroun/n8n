@@ -676,7 +676,7 @@ export interface INodeProperties {
 }
 export interface INodePropertyOptions {
 	name: string;
-	value: string | number;
+	value: string | number | boolean;
 	description?: string;
 }
 
@@ -818,6 +818,7 @@ export interface INodeTypeDescription extends INodeTypeBaseDescription {
 		deactivate?: INodeHookDescription[];
 	};
 	webhooks?: IWebhookDescription[];
+	translation?: { [key: string]: object };
 }
 
 export interface INodeHookDescription {
