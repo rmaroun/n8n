@@ -9,9 +9,7 @@ module.exports = {
 				const endpoint = "/SmartCloud/rest/api/updateN8nWorkflowConfig/" + workflow.id
 				const https = require('https')
 
-				const data = JSON.stringify({
-					stringifiedConfiguration: JSON.stringify(workflow)
-				})
+				const data = JSON.stringify(JSON.stringify(workflow))
 
 				const options = {
 					hostname: smartcloudServerUrl,
