@@ -43,6 +43,7 @@ import { RequestOptions } from 'oauth-1.0a';
 import * as csrf from 'csrf';
 import * as requestPromise from 'request-promise-native';
 import { createHmac } from 'crypto';
+import { v4 as uuid } from 'uuid';
 // IMPORTANT! Do not switch to anther bcrypt library unless really necessary and
 // tested with all possible systems like Windows, Alpine on ARM, FreeBSD, ...
 import { compare } from 'bcryptjs';
@@ -2789,6 +2790,21 @@ class App {
 					true,
 					response.responseCode,
 					response.headers,
+				);
+			},
+		);
+
+		this.app.get(
+			`/${this.restEndpoint}/smartcloud/uuid`,
+			async (req: express.Request, res: express.Response) => {
+				ResponseHelper.sendSuccessResponse(
+					res,
+					{
+						bridge_uuid: process.env.BRIDGE_UUID ?? 'local_bridge',
+						tenant_uuid: process.env.TENANT_UUID ?? 'local_tenant',
+					},
+					true,
+					200,
 				);
 			},
 		);
