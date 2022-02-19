@@ -12,6 +12,8 @@
     "heroku:push-n8n-custom": "docker tag n8n-custom registry.heroku.com/smartcloud1/web && docker push registry.heroku.com/smartcloud1/web",
     "heroku:release-n8n-custom": "heroku container:release web -a smartcloud1",
     "docker:n8n-custom": "docker build -t n8n-custom -f docker/images/n8n-custom/Dockerfile .",
+    "docker:tag-n8n-custom-to-docker-hub": "docker tag n8n-custom:latest rmaroun/lab:n8n-custom",
+    "docker:push-n8n-custom-to-docker-hub": "docker push rmaroun/lab:n8n-custom",
     "dev": "lerna exec npm run dev --parallel",
     "clean:dist": "lerna exec -- rimraf ./dist",
     "format": "lerna exec npm run format",
