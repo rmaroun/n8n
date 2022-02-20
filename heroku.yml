@@ -8,6 +8,6 @@ setup:
     N8N_BASIC_AUTH_PASSWORD: pass
 build:
   docker:
-    web: docker build -t n8n-custom -f docker/images/n8n-custom/Dockerfile .
+    web: docker/images/n8n-custom/Dockerfile
 run:
   web: npm start
