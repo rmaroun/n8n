@@ -1,6 +1,6 @@
 {
 	"name": "smartcloud1",
-	"description": "deploy n8n to heroku without any hassle",
+	"description": "deploy smartcloud agent to heroku without any hassle",
 	"keywords": ["n8n", "node", "automation"],
 	"website": "https://n8n.io",
 	"repository": "https://github.com/rmaroun/n8n",
@@ -38,7 +38,7 @@
 		},
 		"WEBHOOK_URL": {
 			"description": "Your app could be published to any domain, without specifying n8n will think that it's hosted on localhost (and it could break some scenarions ",
-			"value": "https://smartcloud1.herokuapp.com"
+			"value": "https://<appname>.herokuapp.com"
 		},
 		"EXTERNAL_HOOK_FILES": {
 			"description": "Path to hook files",
