@@ -3,7 +3,7 @@
 	"description": "deploy n8n to heroku without any hassle",
 	"keywords": ["n8n", "node", "automation"],
 	"website": "https://n8n.io",
-	"repository": "https://github.com/sarveshwarge/n8n-heroku",
+	"repository": "https://github.com/rmaroun/n8n",
 	"logo": "https://raw.githubusercontent.com/n8n-io/n8n/master/packages/editor-ui/public/favicon-32x32.png",
 	"success_url": "/",
 	"stack": "container",
@@ -39,6 +39,18 @@
 		"WEBHOOK_URL": {
 			"description": "Your app could be published to any domain, without specifying n8n will think that it's hosted on localhost (and it could break some scenarions ",
 			"value": "https://smartcloud1.herokuapp.com"
+		},
+		"EXTERNAL_HOOK_FILES": {
+			"description": "Path to hook files",
+			"value": ""
+		},
+		"BRIDGE_UUID": {
+			"description": "SmartCloud Bridge UUID",
+			"value": ""
+		},
+		"TINI_SUBREAPER": {
+			"description": "Tini Subreaper command enabled",
+			"value": "true"
 		}
 	},
 	"formation": {
