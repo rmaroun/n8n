@@ -10,23 +10,14 @@ RUN apk --update add --virtual build-dependencies python build-base ca-certifica
 
 WORKDIR /data
 
-# We check if the file exists in the current root path
-RUN if [ test -f "lerna.json" ] ; then COPY lerna.json . ; else COPY ../../../lerna.json . ; fi
-#COPY lerna.json .
-RUN if [ test -f "package.json" ] ; then COPY package.json . ; else COPY ../../../package.json . ; fi
-#COPY package.json .
-RUN if [ test -d "packages/cli/" ] ; then COPY packages/cli/ ./packages/cli/ ; else COPY ../../../packages/cli/ ./packages/cli/ ; fi
-#COPY packages/cli/ ./packages/cli/
-RUN if [ test -d "packages/core/" ] ; then COPY packages/core/ ./packages/core/ ; else COPY ../../../packages/core/ ./packages/core/ ; fi
-#COPY packages/core/ ./packages/core/
-RUN if [ test -d "packages/design-system/" ] ; then COPY packages/design-system/ ./packages/design-system/ ; else COPY ../../../packages/design-system/ ./packages/design-system/ ; fi
-#COPY packages/design-system/ ./packages/design-system/
-RUN if [ test -d "packages/editor-ui/" ] ; then COPY packages/editor-ui/ ./packages/editor-ui/ ; else COPY ../../../packages/editor-ui/ ./packages/editor-ui/ ; fi
-#COPY packages/editor-ui/ ./packages/editor-ui/
-RUN if [ test -d "packages/nodes-base/" ] ; then COPY packages/nodes-base/ ./packages/nodes-base/ ; else COPY ../../../packages/nodes-base/ ./packages/nodes-base/ ; fi
-#COPY packages/nodes-base/ ./packages/nodes-base/
-RUN if [ test -d "packages/workflow/" ] ; then COPY packages/workflow/ ./packages/workflow/ ; else COPY ../../../packages/workflow/ ./packages/workflow/ ; fi
-#COPY packages/workflow/ ./packages/workflow/
+COPY lerna.json .
+COPY package.json .
+COPY packages/cli/ ./packages/cli/
+COPY packages/core/ ./packages/core/
+COPY packages/design-system/ ./packages/design-system/
+COPY packages/editor-ui/ ./packages/editor-ui/
+COPY packages/nodes-base/ ./packages/nodes-base/
+COPY packages/workflow/ ./packages/workflow/
 RUN rm -rf node_modules packages/*/node_modules packages/*/dist
 
 RUN npm install --production --loglevel notice
