@@ -10,6 +10,8 @@ RUN apk --update add --virtual build-dependencies python build-base ca-certifica
 
 WORKDIR /data
 
+RUN cd ../../../
+
 COPY lerna.json .
 COPY package.json .
 COPY packages/cli/ ./packages/cli/
