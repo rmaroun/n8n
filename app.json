@@ -36,9 +36,13 @@
 			"description": "Because Heroku SSL is self signed, SSL fails if this is not set to 0",
 			"value": 0
 		},
+		"WEBHOOK_TUNNEL_URL": {
+			"description": "Your app could be published to any domain, without specifying n8n will think that it's hosted on localhost (and it could break some scenarions ",
+			"value": "https://<appname>.herokuapp.com/"
+		},
 		"WEBHOOK_URL": {
 			"description": "Your app could be published to any domain, without specifying n8n will think that it's hosted on localhost (and it could break some scenarions ",
-			"value": "https://<appname>.herokuapp.com"
+			"value": "https://<appname>.herokuapp.com/"
 		},
 		"EXTERNAL_HOOK_FILES": {
 			"description": "Path to hook files",
@@ -64,12 +68,6 @@
 		}
 	},
 	"addons": [
-		{
-			"plan": "heroku-postgresql",
-			"options": {
-				"version": "11"
-			}
-		},
 		{
 			"plan": "papertrail:choklad"
 		}
