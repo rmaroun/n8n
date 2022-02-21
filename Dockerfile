@@ -15,16 +15,13 @@ COPY package.json .
 COPY packages/cli/ ./packages/cli/
 COPY packages/core/ ./packages/core/
 COPY packages/design-system/ ./packages/design-system/
-COPY packages/editor-ui/ ./packages/editor-ui/
+#COPY packages/editor-ui/ ./packages/editor-ui/
 COPY packages/nodes-base/ ./packages/nodes-base/
 COPY packages/workflow/ ./packages/workflow/
 RUN rm -rf node_modules packages/*/node_modules packages/*/dist
 
-#  --production --loglevel notice
-RUN npm install
-#  -- --production
-RUN lerna bootstrap --hoist
-RUN alias npm='node --max_old_space_size=4096 /usr/bin/npm'
+RUN npm install --production --loglevel notice
+RUN lerna bootstrap --hoist -- --production
 RUN npm run build
 
 
