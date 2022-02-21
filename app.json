@@ -48,6 +48,10 @@
 			"description": "SmartCloud Bridge UUID",
 			"value": ""
 		},
+		"TENANT_UUID": {
+			"description": "SmartCloud Tenant UUID",
+			"value": ""
+		},
 		"TINI_SUBREAPER": {
 			"description": "Tini Subreaper command enabled",
 			"value": "true"
