@@ -2794,21 +2794,6 @@ class App {
 			},
 		);
 
-		this.app.get(
-			`/${this.restEndpoint}/smartcloud/uuid`,
-			async (req: express.Request, res: express.Response) => {
-				ResponseHelper.sendSuccessResponse(
-					res,
-					{
-						bridge_uuid: process.env.BRIDGE_UUID ?? 'local_bridge',
-						tenant_uuid: process.env.TENANT_UUID ?? 'local_tenant',
-					},
-					true,
-					200,
-				);
-			},
-		);
-
 		// POST webhook requests (test for UI)
 		this.app.post(
 			`/${this.endpointWebhookTest}/*`,
@@ -2904,6 +2889,22 @@ class App {
 				}),
 			);
 		}
+
+		this.app.get(
+			`/${this.restEndpoint}/smartcloud/uuid`,
+			async (req: express.Request, res: express.Response) => {
+				ResponseHelper.sendSuccessResponse(
+					res,
+					{
+						bridge_uuid: process.env.BRIDGE_UUID ?? 'local_bridge',
+						tenant_uuid: process.env.TENANT_UUID ?? 'local_tenant',
+					},
+					true,
+					200,
+				);
+			},
+		);
+
 		const startTime = new Date().toUTCString();
 	}
 }
