@@ -2,7 +2,7 @@
 FROM node:14.15-alpine as builder
 
 # Update everything and install needed dependencies
-#USER root
+USER root
 
 # Install all needed dependencies
 RUN apk --update add --virtual build-dependencies python build-base ca-certificates && \
@@ -20,8 +20,11 @@ COPY packages/nodes-base/ ./packages/nodes-base/
 COPY packages/workflow/ ./packages/workflow/
 RUN rm -rf node_modules packages/*/node_modules packages/*/dist
 
-RUN npm install --production --loglevel notice
-RUN lerna bootstrap --hoist -- --production
+#  --production --loglevel notice
+RUN npm install
+#  -- --production
+RUN lerna bootstrap --hoist
+RUN alias npm='node --max_old_space_size=8000 /usr/bin/npm'
 RUN npm run build
 
 
