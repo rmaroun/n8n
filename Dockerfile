@@ -44,6 +44,8 @@ RUN apk --no-cache add --virtual fonts msttcorefonts-installer fontconfig && \
 	apk del fonts && \
 	find  /usr/share/fonts/truetype/msttcorefonts/ -type l -exec unlink {} \;
 
+RUN npm install -g run-script-os && npm install -g @oclif/command
+
 ENV NODE_ICU_DATA /usr/local/lib/node_modules/full-icu
 
 COPY --from=builder /data ./
