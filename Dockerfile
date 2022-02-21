@@ -2,7 +2,7 @@
 FROM node:14.15-alpine as builder
 
 # Update everything and install needed dependencies
-USER root
+#USER root
 
 # Install all needed dependencies
 RUN apk --update add --virtual build-dependencies python build-base ca-certificates && \
