@@ -24,7 +24,7 @@ RUN rm -rf node_modules packages/*/node_modules packages/*/dist
 RUN npm install
 #  -- --production
 RUN lerna bootstrap --hoist
-RUN alias npm='node --max_old_space_size=8000 /usr/bin/npm'
+RUN alias npm='node --max_old_space_size=4096 /usr/bin/npm'
 RUN npm run build
 
 
