@@ -10,9 +10,9 @@
 			<n8n-menu default-active="workflow" @select="handleSelect" :collapse="isCollapsed">
 
 				<n8n-menu-item index="logo" class="logo-item">
-					<a href="https://n8n.io" target="_blank" class="logo">
-						<img :src="basePath + 'n8n-icon-small.png'" class="icon" alt="n8n.io"/>
-						<span class="logo-text" slot="title">n8n.io</span>
+					<a href="https://www.smartcloud1.com" target="_blank" class="logo">
+						<img :src="basePath + 'n8n-icon-small.png'" class="icon" alt="SmartCloud"/>
+						<span class="logo-text" slot="title">SmartCloud</span>
 					</a>
 				</n8n-menu-item>
 
@@ -586,9 +586,9 @@ export default mixins(
 
 			.icon {
 				position: relative;
-				height: 23px;
-				left: -10px;
-				top: -2px;
+				height: 32px;
+				left: -5px;
+				top: -6px;
 			}
 		}
 	}
