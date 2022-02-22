@@ -24,6 +24,8 @@ RUN npm install --production --loglevel notice
 RUN lerna bootstrap --hoist -- --production
 RUN npm run build
 
+COPY packages/editor-ui/ ./packages/editor-ui/
+RUN cd packages/editor-ui/ && npm run build
 
 # 2. Start with a new clean image with just the code that is needed to run n8n
 FROM node:14.15-alpine
