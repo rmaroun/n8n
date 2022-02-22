@@ -20,6 +20,8 @@ COPY packages/nodes-base/ ./packages/nodes-base/
 COPY packages/workflow/ ./packages/workflow/
 RUN rm -rf node_modules packages/*/node_modules packages/*/dist
 COPY packages/editor-ui/ ./packages/editor-ui/
+RUN cd packages/editor-ui/ && npm install
+RUN cd ../..
 
 RUN npm install --production --loglevel notice
 RUN lerna bootstrap --hoist -- --production
