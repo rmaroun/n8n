@@ -4,6 +4,7 @@
   "homepage": "https://n8n.io",
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist --no-ci",
+    "npm:push-packages": "cd packages/cli && npm publish && cd ../core && npm publish && cd ../design-system && npm publish && cd ../editor-ui && npm publish && cd ../nodes-base && npm publish && cd ../workflow && npm publish",
     "build": "lerna exec npm run build",
     "heroku-postbuild": "npm install -g lerna && npm install -g run-script-os && npm install -g @oclif/command && npm i && npm run bootstrap && npm run build",
     "connect:heroku": "heroku ps:exec -a smartcloud1",
