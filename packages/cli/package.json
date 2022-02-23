@@ -1,10 +1,9 @@
 {
-  "name": "n8n-sc",
+  "name": "@rmaroun/n8n",
   "version": "0.164.1",
   "description": "n8n Workflow Automation Tool",
   "license": "SEE LICENSE IN LICENSE.md",
   "homepage": "https://n8n.io",
-  "private": true,
   "author": {
     "name": "Jan Oberhauser",
     "email": "jan@n8n.io"
