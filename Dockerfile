@@ -1,5 +1,7 @@
 FROM node:lts-alpine
 
+# Specifying work directory
+WORKDIR /data
 # pass N8N_VERSION Argument while building or use default
 ARG N8N_VERSION=0.164.11
 ARG NPM_TOKEN
@@ -18,9 +20,6 @@ RUN apk --update add --virtual build-dependencies python3 build-base && \
 	apk del build-dependencies
 
 RUN rm -f .npmrc
-
-# Specifying work directory
-WORKDIR /data
 
 # copy start script to container
 COPY ./start.sh /
