@@ -13,14 +13,11 @@ USER root
 # it needs to build it correctly.
 RUN apk --update add --virtual build-dependencies python3 build-base && \
 	npm_config_user=root npm install -g @rmaroun/n8n@${N8N_VERSION} && \
+	npm install -g run-script-os && npm install -g @oclif/command && \
 	apk del build-dependencies
 
 # Specifying work directory
 WORKDIR /data
-
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-# make the script executable
-RUN chmod +x /docker-entrypoint.sh
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 # make the script executable
