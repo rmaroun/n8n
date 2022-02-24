@@ -20,19 +20,21 @@ COPY packages/nodes-base/ ./packages/nodes-base/
 COPY packages/workflow/ ./packages/workflow/
 RUN rm -rf node_modules packages/*/node_modules packages/*/dist
 
-RUN npm install --production --loglevel notice
-RUN lerna bootstrap --hoist -- --production
+# --production --loglevel notice
+RUN npm install
+#  -- --production
+RUN lerna bootstrap --hoist
 RUN npm run build
 
 
 # 2. Start with a new clean image with just the code that is needed to run n8n
-FROM node:14.15-alpine
+#FROM node:14.15-alpine
 
-USER root
+#USER root
 
 RUN apk add --update graphicsmagick tzdata tini su-exec git
 
-WORKDIR /data
+#WORKDIR /data
 
 # Install all needed dependencies
 RUN npm_config_user=root npm install -g full-icu
@@ -46,7 +48,7 @@ RUN apk --no-cache add --virtual fonts msttcorefonts-installer fontconfig && \
 
 ENV NODE_ICU_DATA /usr/local/lib/node_modules/full-icu
 
-COPY --from=builder /data ./
+#COPY --from=builder /data ./
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 # make the script executable
@@ -56,4 +58,4 @@ RUN chmod +x /docker-entrypoint.sh
 CMD ["/docker-entrypoint.sh"]
 #ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 
-EXPOSE 5678/tcp
+#EXPOSE 5678/tcp
