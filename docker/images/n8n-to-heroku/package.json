@@ -1,0 +1,10 @@
+{
+  "name": "smartcloud",
+  "version": "1.2.0",
+  "description": "SmartCloud web app",
+  "author": "SmartCloud LLC",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "dependencies": {
+    "n8n": "npm:@rmaroun/n8n@0.164.11"
+  }
+}
