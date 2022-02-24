@@ -1,11 +1,7 @@
 FROM node:lts-alpine
 
-# Specifying work directory
-WORKDIR /data
 # pass N8N_VERSION Argument while building or use default
 ARG N8N_VERSION=0.164.11
-ARG NPM_TOKEN
-COPY .npmrc .npmrc
 
 # Update everything and install needed dependencies
 RUN apk add --update graphicsmagick tzdata
@@ -19,10 +15,11 @@ RUN apk --update add --virtual build-dependencies python3 build-base && \
 	npm_config_user=root npm install -g n8n@npm:@rmaroun/n8n@${N8N_VERSION} && \
 	apk del build-dependencies
 
-RUN rm -f .npmrc
+# Specifying work directory
+WORKDIR /data
 
 # copy start script to container
-COPY ./start.sh /
+COPY start.sh /start.sh
 
 # make the script executable
 RUN chmod +x /start.sh
