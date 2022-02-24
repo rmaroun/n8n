@@ -11,6 +11,8 @@ WORKDIR /data
 
 COPY package.json /package.json
 
+RUN npm install
+
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 # make the script executable
 RUN chmod +x /docker-entrypoint.sh
