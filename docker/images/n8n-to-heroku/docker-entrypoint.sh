@@ -14,7 +14,7 @@ if [ "$#" -gt 0 ]; then
   if [[ "$COMMAND" == "n8n" ]]; then
     shift
     # exec su-exec node ./packages/cli/bin/n8n "$@"
-		exec n8n "$@"
+		exec node ./node_modules/n8n/bin/n8n "$@"
   else
     #exec su-exec node "$@"
 		exec node "$@"
@@ -23,5 +23,5 @@ if [ "$#" -gt 0 ]; then
 else
 # Got started without arguments
 #exec su-exec node ./packages/cli/bin/n8n
-exec n8n
+exec node ./node_modules/n8n/bin/n8n
 fi
