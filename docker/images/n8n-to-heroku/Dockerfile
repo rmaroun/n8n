@@ -30,7 +30,7 @@ RUN apk --no-cache add --virtual fonts msttcorefonts-installer fontconfig && \
 
 ENV NODE_ICU_DATA /usr/local/lib/node_modules/full-icu
 
-COPY docker/images/n8n-to-heroku/docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 # make the script executable
 RUN chmod +x /docker-entrypoint.sh
 
