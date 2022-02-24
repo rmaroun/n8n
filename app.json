@@ -6,7 +6,7 @@
 	"repository": "https://github.com/rmaroun/n8n",
 	"logo": "https://raw.githubusercontent.com/n8n-io/n8n/master/packages/editor-ui/public/favicon-32x32.png",
 	"success_url": "/",
-	"stack": "container",
+	"stack": "heroku/nodejs",
 	"env": {
 		"N8N_BASIC_AUTH_ACTIVE": {
 			"description": "Protect n8n setup with basic authentication.",
