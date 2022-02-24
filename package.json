@@ -6,7 +6,7 @@
     "bootstrap": "lerna bootstrap --hoist --no-ci",
     "npm:push-packages": "cd packages/cli && npm publish && cd ../core && npm publish && cd ../design-system && npm publish && cd ../editor-ui && npm publish && cd ../nodes-base && npm publish && cd ../workflow && npm publish",
     "build": "lerna exec npm run build",
-    "heroku-postbuild": "apt-get install -y build-essential python-is-python3 && npm install -g lerna && npm install -g run-script-os && npm install -g @oclif/command && npm install && npm run bootstrap && npm run build",
+    "heroku-postbuild": "npm install -g lerna && npm install -g run-script-os && npm install -g @oclif/command@^1.5.18 && npm install && npm run bootstrap && npm run build",
     "connect:heroku": "heroku ps:exec -a smartcloud1",
     "heroku:n8n-custom:build-local-push-and-release": "npm run docker:n8n-custom && npm run heroku:tag-n8n-custom && npm run heroku:push-n8n-custom && npm run heroku:release-n8n-custom",
     "heroku:container-login": "heroku container:login",
