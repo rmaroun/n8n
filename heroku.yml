@@ -9,5 +9,4 @@ setup:
 build:
   docker:
     web: docker/images/n8n-to-heroku/Dockerfile
-run:
-  web: /start.sh
+

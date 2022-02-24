@@ -3,15 +3,14 @@ FROM node:lts-alpine
 # pass N8N_VERSION Argument while building or use default
 ARG N8N_VERSION=0.164.11
 
-# Specifying work directory
-WORKDIR /data
-
-# Update everything and install needed dependencies
-RUN apk add --update graphicsmagick tzdata
-
-
 # Set a custom user to not have n8n run as root
 USER root
+
+# Update everything and install needed dependencies
+RUN apk add --update graphicsmagick tzdata tini su-exec git
+
+# Specifying work directory
+WORKDIR /data
 
 # Install all needed dependencies
 RUN npm_config_user=root npm install -g full-icu
@@ -31,11 +30,9 @@ RUN apk --no-cache add --virtual fonts msttcorefonts-installer fontconfig && \
 
 ENV NODE_ICU_DATA /usr/local/lib/node_modules/full-icu
 
-# copy start script to container
-COPY start.sh /start.sh
-
+COPY docker/images/n8n-to-heroku/docker-entrypoint.sh /docker-entrypoint.sh
 # make the script executable
-RUN chmod +x /start.sh
+RUN chmod +x /docker-entrypoint.sh
 
 # define execution entrypoint
-CMD ["/start.sh"]
+CMD ["/docker-entrypoint.sh"]
