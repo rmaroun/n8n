@@ -159,8 +159,10 @@ export class LdapSync {
 	 * Stop the current job scheduled, if any
 	 */
 	stop(): void {
-		clearInterval(this.intervalId);
-		this.intervalId = undefined;
+		if (this.intervalId) {
+			clearInterval(this.intervalId);
+			this.intervalId = undefined;
+		}
 	}
 
 	/**

@@ -136,7 +136,8 @@ export class PasswordResetController {
 		await this.userRepository.update(id, { resetPasswordToken, resetPasswordTokenExpiration });
 
 		const baseUrl = getInstanceBaseUrl();
-		const url = new URL(`${baseUrl}/change-password`);
+		// const url = new URL(`${baseUrl}/change-password`);
+		const url = require('url');
 		url.searchParams.append('userId', id);
 		url.searchParams.append('token', resetPasswordToken);
 

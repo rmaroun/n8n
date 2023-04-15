@@ -806,7 +806,9 @@ class Server extends AbstractServer {
 
 				// Response comes as x-www-form-urlencoded string so convert it to JSON
 
-				const paramsParser = new URLSearchParams(response);
+				const url = require('url');
+				const paramsParser = url.searchParams(response);
+				//const paramsParser = new URLSearchParams(response);
 
 				const responseJson = Object.fromEntries(paramsParser.entries());
 
@@ -921,7 +923,9 @@ class Server extends AbstractServer {
 
 					// Response comes as x-www-form-urlencoded string so convert it to JSON
 
-					const paramParser = new URLSearchParams(oauthToken.data);
+					const url = require('url');
+					const paramParser = url.searchParams(oauthToken.data);
+					//const paramParser = new URLSearchParams(oauthToken.data);
 
 					const oauthTokenJson = Object.fromEntries(paramParser.entries());
 

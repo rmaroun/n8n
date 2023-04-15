@@ -338,7 +338,8 @@ export class SamlService {
 			} else if (requestContext.binding === 'post') {
 				const context = requestContext.context as PostBindingContext;
 				const endpoint = context.entityEndpoint;
-				const params = new URLSearchParams();
+				const url = require('url');
+				const params = url.searchParams;
 				params.append(context.type, context.context);
 				if (context.relayState) {
 					params.append('RelayState', context.relayState);
