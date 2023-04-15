@@ -234,6 +234,13 @@ export default mixins(
 					activateOnRouteNames: [VIEWS.EXECUTIONS],
 				},
 				{
+					id: 'caas',
+					icon: 'brain',
+					label: this.$locale.baseText('mainSidebar.caas'),
+					position: 'top',
+					activateOnRouteNames: [VIEWS.CAAS],
+				},
+				{
 					id: 'settings',
 					icon: 'cog',
 					label: this.$locale.baseText('settings'),
@@ -377,6 +384,12 @@ export default mixins(
 				case 'executions': {
 					if (this.$router.currentRoute.name !== VIEWS.EXECUTIONS) {
 						this.goToRoute({ name: VIEWS.EXECUTIONS });
+					}
+					break;
+				}
+				case 'caas': {
+					if (this.$router.currentRoute.name !== VIEWS.CAAS) {
+						this.goToRoute({ name: VIEWS.CAAS });
 					}
 					break;
 				}

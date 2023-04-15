@@ -619,6 +619,7 @@
 	"mainSidebar.templates": "Templates",
 	"mainSidebar.workflows": "Workflows",
 	"mainSidebar.executions": "All executions",
+	"mainSidebar.caas": "CaaS",
 	"menuActions.duplicate": "Duplicate",
 	"menuActions.download": "Download",
 	"menuActions.importFromUrl": "Import from URL...",

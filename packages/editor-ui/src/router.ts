@@ -8,6 +8,7 @@ import MainSidebar from '@/components/MainSidebar.vue';
 import NodeView from '@/views/NodeView.vue';
 import WorkflowExecutionsList from '@/components/ExecutionsView/ExecutionsList.vue';
 import ExecutionsLandingPage from '@/components/ExecutionsView/ExecutionsLandingPage.vue';
+import CaasLandingPage from '@/components/CaasView/CaasLandingPage.vue';
 import ExecutionPreview from '@/components/ExecutionsView/ExecutionPreview.vue';
 import SettingsView from './views/SettingsView.vue';
 import SettingsLdapView from './views/SettingsLdapView.vue';
@@ -183,6 +184,21 @@ export const routes = [
 		name: VIEWS.EXECUTIONS,
 		components: {
 			default: ExecutionsView,
+			sidebar: MainSidebar,
+		},
+		meta: {
+			permissions: {
+				allow: {
+					loginStatus: [LOGIN_STATUS.LoggedIn],
+				},
+			},
+		},
+	},
+	{
+		path: '/caas',
+		name: VIEWS.CAAS,
+		components: {
+			default: CaasLandingPage,
 			sidebar: MainSidebar,
 		},
 		meta: {

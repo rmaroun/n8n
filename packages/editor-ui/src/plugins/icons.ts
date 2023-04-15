@@ -14,6 +14,7 @@ import {
 	faBolt,
 	faBook,
 	faBoxOpen,
+	faBrain,
 	faBug,
 	faCalculator,
 	faCalendar,
@@ -148,6 +149,7 @@ addIcon(faBan);
 addIcon(faBolt);
 addIcon(faBook);
 addIcon(faBoxOpen);
+addIcon(faBrain);
 addIcon(faBug);
 addIcon(faCalculator);
 addIcon(faCalendar);

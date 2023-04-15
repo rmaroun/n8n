@@ -101,6 +101,12 @@ const menuItems = [
 		position: 'top',
 	},
 	{
+		id: 'caas',
+		icon: 'brain',
+		label: 'CaaS',
+		position: 'top',
+	},
+	{
 		id: 'disabled-item',
 		icon: 'times',
 		label: 'Not Available',
