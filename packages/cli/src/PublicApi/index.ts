@@ -54,6 +54,48 @@ async function createApiRouter(
 		res.sendFile(openApiSpecPath);
 	});
 
+	/********************************************************************
+		OPEN AI INTEGRATION
+	*********************************************************************/
+	apiController.post(`/${publicApiEndpoint}/yuzeai`, (req, res) => {
+		var axios = require('axios');
+		const { message } = req.body
+		var data = {
+			"messages": [{
+					role: "system",
+					content: "You are an AI assistant that helps people find information."
+				}, {
+					role: "user",
+					content: `Generate the n8n json cpde for the following flow: ${message}`
+				}],
+			"max_tokens": 800,
+			"temperature": 0.7,
+			"frequency_penalty": 0,
+			"presence_penalty": 0,
+			"top_p": 0.95,
+			"stop": null
+		};
+		var config = {
+			method: 'post',
+			url: 'https://ralph-openai-poc.openai.azure.com/openai/deployments/chatgpt35turbo/chat/completions?api-version=2023-03-15-preview',
+			headers: {
+				'Content-Type': 'application/json',
+				'api-key': `${process.env.N8N_OPEN_AI_KEY}`
+			},
+			data : data
+		};
+
+		axios(config)
+		.then(function (responseFromOai : any) {
+			res.setHeader('Content-Type', 'application/json');
+			res.send({from: 'yuzeAi', data: responseFromOai.data.choices[0]?.message?.content });
+		})
+		.catch(function (error : any) {
+			res.send(error);
+		});
+	});
+	//***************************************************************** */
+
 	apiController.use(
 		`/${publicApiEndpoint}/${version}`,
 		express.json(),
