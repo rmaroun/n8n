@@ -36,6 +36,7 @@
 <script>
 import util from '../common/util';
 import { marked } from 'marked';
+import axios from 'axios';
 
 export default {
 	name: 'chatlist',
@@ -66,8 +67,7 @@ export default {
 		getEXP(pageNow, pageSize) {
 			return this.EXPS.slice((pageNow - 1) * pageSize, pageSize * pageNow);
 		},
-		//发送消息
-		sendMsg() {
+		async sendMsg() {
 			var _this = this;
 
 			if (this.content === '') {
@@ -82,17 +82,53 @@ export default {
 				content: this.content,
 			});
 
-			setTimeout(function () {
+			var progressText = 'Am working on it...';
+
+			var progressIntervalId = setInterval(function () {
+				// remove the last text
+				if (progressText !== 'Am working on it...') {
+					_this.records.pop();
+				}
+				// add an extra dot at each interval
+				progressText += '.';
+				// push work in progress message
 				_this.records.push({
 					type: 2,
 					time: util.formatDate.format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
-					name: 'customer service MM',
+					name: 'YuzeAI',
 					// eslint-disable-next-line n8n-local-rules/no-unneeded-backticks
-					content: `Here is the n8n workflow JSON code for the flow you described:\n\n\`\`\`\n{\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"maxResults\": 10,\n        \"query\": \"openai\"\n      },\n      \"name\": \"Twitter Search\",\n      \"type\": \"n8n-nodes-base.twitterSearch\",\n      \"id\": \"6d2b2061-5e5c-4d0e-a9c7-8fc6f8c6d2b6\",\n      \"typeVersion\": 1,\n      \"position\": [\n        250,\n        300\n      ]\n    },\n    {\n      \"parameters\": {\n        \"functionCode\": \"let tweets = items[0].json.statuses;\\nlet summary = '';\\n\\nfor (let tweet of tweets) {\\n  summary += '\\\\n' + tweet.text;\\n}\\n\\nreturn [{json: {summary: summary}}];\"\n      },\n      \"name\": \"Summarize Tweets\",\n      \"type\": \"n8n-nodes-base.function\",\n      \"typeVersion\": 1,\n      \"position\": [\n        550,\n        300\n      ],\n      \"id\": \"9b1f7f4c-4d23-4c1d-8d96-4e4f9f7d1c9b\"\n    },\n    {\n      \"parameters\": {\n        \"toEmails\": [\n          \"info@toto.com\"\n        ],\n        \"subject\": \"Weekly Summary of OpenAI Tweets\",\n        \"text\": \"Here is a summary of the latest tweets about OpenAI: {{$json['summary']}}\"\n      },\n      \"name\": \"Send Email\",\n      \"type\": \"n8n-nodes-base.emailSend\",\n      \"typeVersion\": 1,\n      \"position\": [\n        850,\n        300\n      ],\n      \"id\": \"b6f53c6f-4a4f-4e17-8c4e-0f58cc1c1d22\"\n    }\n  ],\n  \"connections\": {\n    \"Twitter Search\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Summarize Tweets\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Summarize Tweets\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Send Email\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  }\n}\n\`\`\`\n\nThis workflow retrieves the latest 10 tweets about \"openai\" using the Twitter Search node, summarizes their content using a Function node, and then sends a weekly summary email to info@toto.com using the Email Send node.`,
+					content: progressText,
 				});
-			}, 100);
+			}, 1000);
 
+			var message = this.content;
 			this.content = '';
+
+			await axios.post('/api/yuzeai', { message }).then((response) => {
+				// stop the interval
+				clearInterval(progressIntervalId);
+				// remove work in progress message
+				_this.records.pop();
+				// push in openAi message
+				if (response.data.data) {
+					_this.records.push({
+						type: 2,
+						time: util.formatDate.format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
+						name: 'YuzeAI',
+						// eslint-disable-next-line n8n-local-rules/no-unneeded-backticks
+						content: response.data.data.replace('`', '\`'),
+					});
+				} else {
+					_this.records.push({
+						type: 2,
+						time: util.formatDate.format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
+						name: 'YuzeAI',
+						// eslint-disable-next-line n8n-local-rules/no-unneeded-backticks
+						content: 'error: ' + JSON.stringify(response.data),
+					});
+				}
+				_this.scrollToBottom();
+			});
 
 			this.scrollToBottom();
 		},
