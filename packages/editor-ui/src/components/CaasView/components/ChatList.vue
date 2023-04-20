@@ -1,19 +1,41 @@
 <template>
 	<div>
-		<section class="chatlist" :class="showSelBox > 0 ? 'chatlist-bottom-collapse' : 'chatlist-bottom'">
-			<mt-loadmore :top-method="loadTop" top-pull-text="Load more" top-drop-text="Release load"
+		<section
+			class="chatlist"
+			:class="showSelBox > 0 ? 'chatlist-bottom-collapse' : 'chatlist-bottom'"
+		>
+			<mt-loadmore
+				:top-method="loadTop"
+				top-pull-text="Load more"
+				top-drop-text="Release load"
 				@top-status-change="handleTopChange" ref="loadmore">
 				<ul>
 					<template v-for="item in records">
 						<li class="chat-mine" v-if="item.type == 1">
-							<div class="chat-user"><img src="../assets/user.png"></div>
-							<div class="time"><cite><i>{{ item.time }}</i>{{ item.name }}</cite></div>
+							<div class="chat-user"><img src="../assets/user.png"/></div>
+							<div class="time">
+								<cite
+									><i>{{ item.time }}</i
+									>{{ item.name }}</cite
+								>
+							</div>
 							<div class="chat-text" v-html="item.content"></div>
 						</li>
 						<li v-if="item.type == 2">
 							<div class="chat-user"><img src="../assets/default.png"></div>
-							<div class="time"><cite>{{ item.name }}<i>{{ item.time }}</i></cite></div>
-							<div class="chat-text" v-html="markdownToHtml(item.content)"></div>
+							<div class="time">
+								<cite
+									>{{ item.name }}<i>{{ item.time }}</i></cite
+								>
+							</div>
+							<div
+								v-if="item.code == undefined"
+								class="chat-text"
+								v-html="markdownToHtml(item.content)"
+							></div>
+							<div v-if="item.code != undefined" class="image-preview">
+								<WorkflowPreview :loading="loading" :workflow="JSON.parse(item.code)" />
+							</div>
 						</li>
 					</template>
 				</ul>
@@ -37,12 +59,19 @@
 import util from '../common/util';
 import { marked } from 'marked';
 import axios from 'axios';
+import WorkflowPreview from '../../WorkflowPreview.vue';
 
 export default {
 	name: 'chatlist',
+	components: {
+		WorkflowPreview,
+	},
 	data() {
 		return {
-			showSelBox: 0, // 0隐藏 1显示表情 2显示其他
+			loading: true,
+			showPreview: true,
+			notFoundError: false,
+			showSelBox: 0,
 			selFace: 'Expression',
 			selOther: 'Other functions',
 			content: '',
@@ -64,6 +93,9 @@ export default {
 		markdownToHtml(description) {
 			return marked(description);
 		},
+		onHidePreview() {
+			this.showPreview = false;
+		},
 		getEXP(pageNow, pageSize) {
 			return this.EXPS.slice((pageNow - 1) * pageSize, pageSize * pageNow);
 		},
@@ -78,7 +110,7 @@ export default {
 			this.records.push({
 				type: 1,
 				time: util.formatDate.format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
-				name: 'Tourists',
+				name: 'Marc',
 				content: this.content,
 			});
 
@@ -111,12 +143,29 @@ export default {
 				_this.records.pop();
 				// push in openAi message
 				if (response.data.data) {
+					let code = undefined;
+					try {
+						const firstOccurence = response.data.data.indexOf('```');
+						code = JSON.stringify(
+							// eslint-disable-next-line n8n-local-rules/no-uncaught-json-parse
+							JSON.parse(
+								response.data.data.substring(
+									firstOccurence + 3,
+									response.data.data.indexOf('```', firstOccurence + 1),
+								),
+							),
+						);
+						console.log('workflow code => ', code);
+					} catch (e) {
+						console.log('error while converting text to JSON => ', e); // error in the above string (in this case, yes)!
+					}
 					_this.records.push({
 						type: 2,
 						time: util.formatDate.format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
 						name: 'YuzeAI',
 						// eslint-disable-next-line n8n-local-rules/no-unneeded-backticks
 						content: response.data.data.replace('`', '\`'),
+						code,
 					});
 				} else {
 					_this.records.push({
@@ -154,13 +203,13 @@ export default {
 					{
 						type: 1,
 						time: util.formatDate.format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
-						name: 'Tourists',
+						name: 'Marc',
 						content: 'Hello! 13213',
 					},
 					{
 						type: 2,
 						time: util.formatDate.format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
-						name: 'Customer MM',
+						name: 'YuzeAI',
 						content:
 							'Here is <a target="_blank" href="https://github.com/taylorchen709/vue-chat">source code</a>13213',
 					},
@@ -175,7 +224,8 @@ export default {
 			}, 1500);
 		},
 	},
-	mounted() {
+	async mounted() {
+		this.loading = false;
 		this.scrollToBottom();
 		this.focusTxtContent();
 	},
@@ -431,5 +481,17 @@ cite i {
 	right: 5px;
 	width: 65px;
 	top: 7px;
+}
+
+.image-preview {
+	width: 100%;
+	height: 500px;
+	border: var(--border-base);
+	border-radius: var(--border-radius-large);
+	overflow: hidden;
+
+	img {
+		width: 100%;
+	}
 }
 </style>
