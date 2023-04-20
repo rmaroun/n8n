@@ -68,7 +68,7 @@ async function createApiRouter(
 					role: "user",
 					content: `Generate the n8n json cpde for the following flow: ${message}`
 				}],
-			"max_tokens": 800,
+			"max_tokens": 8000,
 			"temperature": 0.7,
 			"frequency_penalty": 0,
 			"presence_penalty": 0,
