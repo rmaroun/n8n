@@ -11,10 +11,14 @@ import type { HttpError } from 'express-openapi-validator/dist/framework/types';
 import type { OpenAPIV3 } from 'openapi-types';
 import type { JsonObject } from 'swagger-ui-express';
 
+// eslint-disable-next-line import/no-unresolved
 import config from '@/config';
+// eslint-disable-next-line import/no-unresolved
 import * as Db from '@/Db';
+// eslint-disable-next-line import/no-unresolved
 import { getInstanceBaseUrl } from '@/UserManagement/UserManagementHelper';
 import { Container } from 'typedi';
+// eslint-disable-next-line import/no-unresolved
 import { InternalHooks } from '@/InternalHooks';
 
 async function createApiRouter(
@@ -58,41 +62,51 @@ async function createApiRouter(
 		OPEN AI INTEGRATION
 	*********************************************************************/
 	apiController.post(`/${publicApiEndpoint}/yuzeai`, (req, res) => {
-		var axios = require('axios');
-		const { message } = req.body
-		var data = {
-			"messages": [{
-					role: "system",
-					content: "You are an AI assistant that helps people find information."
-				}, {
-					role: "user",
-					content: `Generate the n8n json cpde for the following flow: ${message}`
-				}],
-			"max_tokens": 8000,
-			"temperature": 0.7,
-			"frequency_penalty": 0,
-			"presence_penalty": 0,
-			"top_p": 0.95,
-			"stop": null
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
+		const axios = require('axios');
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		const { message } = req.body;
+		const data = {
+			messages: [
+				{
+					role: 'system',
+					content: 'You are an AI assistant that helps people find information.',
+				},
+				{
+					role: 'user',
+					// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+					content: `Generate the n8n json code for the following flow: ${message}`,
+				},
+			],
+			max_tokens: 8000,
+			temperature: 0.7,
+			frequency_penalty: 0,
+			presence_penalty: 0,
+			top_p: 0.95,
+			stop: null,
 		};
-		var config = {
+		// eslint-disable-next-line @typescript-eslint/no-shadow
+		const config = {
 			method: 'post',
 			url: 'https://ralph-openai-poc.openai.azure.com/openai/deployments/chatgpt35turbo/chat/completions?api-version=2023-03-15-preview',
 			headers: {
 				'Content-Type': 'application/json',
-				'api-key': `${process.env.N8N_OPEN_AI_KEY}`
+				// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+				'api-key': `${process.env.N8N_OPEN_AI_KEY}`,
 			},
-			data : data
+			data,
 		};
 
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
 		axios(config)
-		.then(function (responseFromOai : any) {
-			res.setHeader('Content-Type', 'application/json');
-			res.send({from: 'yuzeAi', data: responseFromOai.data.choices[0]?.message?.content });
-		})
-		.catch(function (error : any) {
-			res.send(error);
-		});
+			.then(function (responseFromOai: any) {
+				res.setHeader('Content-Type', 'application/json');
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+				res.send({ from: 'yuzeAi', data: responseFromOai.data.choices[0]?.message?.content });
+			})
+			.catch(function (error: any) {
+				res.send(error);
+			});
 	});
 	//***************************************************************** */
 
